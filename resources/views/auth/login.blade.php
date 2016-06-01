@@ -46,7 +46,7 @@ body{
               <div class="clearfix"></div>
               <br />
               <div>
-                <h1><i class="fa fa-umbrella" style="font-size: 26px;"></i> P.O.V - Gestão de Plantão de Vendas de Loteamento</h1>
+                <h1><i class="fa fa-umbrella" style="font-size: 26px;"></i> P.V.O - Gestão de Plantão de Vendas de Loteamento</h1>
               </div>
             </div>
           </form>

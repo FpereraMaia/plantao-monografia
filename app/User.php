@@ -7,7 +7,6 @@ use Kodeine\Acl\Traits\HasRole;
 
 class User extends Authenticatable
 {
-
     use HasRole;
     /**
      * The attributes that are mass assignable.
@@ -15,7 +14,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'client_id'
     ];
 
     /**
@@ -26,4 +25,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function client()
+    {
+      return $this->belongsTo('App\Client');
+    }
 }

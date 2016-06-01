@@ -13,7 +13,7 @@ body{
         {{ csrf_field() }}
 
         <h1>Cadastre-se Grátis</h1>
-        
+
         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
           <input type="text" class="form-control" placeholder="Nome Completo" required="" name="name" value="{{ old('name') }}"/>
           @if ($errors->has('name'))
@@ -62,7 +62,7 @@ body{
           <div class="clearfix"></div>
           <br />
           <div>
-            <h1><i class="fa fa-umbrella" style="font-size: 26px;"></i> P.O.V - Gestão de Plantão de Vendas de Loteamento</h1>
+            <h1><i class="fa fa-umbrella" style="font-size: 26px;"></i> P.V.O - Gestão de Plantão de Vendas de Loteamento</h1>
 
           </div>
         </div>
