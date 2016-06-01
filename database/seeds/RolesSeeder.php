@@ -12,18 +12,23 @@ class RolesSeeder extends Seeder
   */
   public function run()
   {
-    DB::table('roles')->delete();
+      DB::table('roles')->delete();
 
       Role::create([
-      'name' => 'Administrador',
-      'slug' => 'admin',
-      'description' => 'Privilégio de administrador geral do sistema.'
-    ]);
+        'name' => 'Administrador',
+        'slug' => 'admin',
+        'description' => 'Privilégio de administrador geral do sistema.'
+      ]);
 
-    Role::create([
-    'name' => 'Funcionário',
-    'slug' => 'func',
-    'description' => 'Privilégio de funcionários.'
-  ]);
+      Role::create([
+        'name' => 'Funcionário',
+        'slug' => 'func',
+        'description' => 'Privilégio de funcionários.'
+      ]);
+      Role::create([
+        'name' => 'Corretor',
+        'slug' => 'corretor',
+        'description' => 'Privilégio de corretor.'
+      ]);
   }
 }

@@ -54,7 +54,7 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>Corretor</h3>
+                <h3>{{ Auth::user()->roles[0]->name }}</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-users"></i> Usuários <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -64,8 +64,8 @@
                       </li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-map-marker"></i> Empreendimentos </a></li>
-                  <li><a><i class="fa fa-exchange"></i> Vendas </a></li>
+                  <li><a href="{{ url('empreendimentos') }}"><i class="fa fa-map-marker"></i> Empreendimentos </a></li>
+                  <li><a href="{{ url('vendas') }}"><i class="fa fa-exchange"></i> Vendas </a></li>
                 </ul>
               </div>
               <div class="menu_section">

@@ -15,16 +15,16 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Usuários <small>Funcionários</small></h2>
+          <h2>Usuários <small>Corretores</small></h2>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url('/usuarios/funcionarios/create') }}">Novo Funcionário</a>
+                <li><a href="{{ url('/usuarios/corretores/create') }}">Novo Corretor</a>
                 </li>
-                <li><a href="{{ url('/usuarios/funcionarios/log-geral') }}">Log Geral</a>
+                <li><a href="{{ url('/usuarios/corretores/log-geral') }}">Log Geral</a>
                 </li>
               </ul>
             </li>
@@ -35,13 +35,14 @@
       </div>
       <div class="x_content">
         <p class="text-muted font-13 m-b-30">
-          A tabela abaixo representa a lista dos funcionários cadastrados no sistema. Para obter a auditoria do que eles efetuaram no sistema, clique no botão na coluna <code> Ações </code>.
+          A tabela abaixo representa a lista dos corretores cadastrados no sistema. Para obter a auditoria do que eles efetuaram no sistema, clique no botão na coluna <code> Ações </code>.
         </p>
         @include('common.success')
         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
           <thead>
             <tr>
               <th>Nome</th>
+              <th>CRECI</th>
               <th>E-mail</th>
               <th>Telefones</th>
               <th>Ações</th>
@@ -49,22 +50,23 @@
           </thead>
 
           <tbody>
-            @foreach($roleFunctionaries->users as $functionary)
+            @foreach($roleBrokers->users as $broker)
             <tr>
-              <td>{{ $functionary->name }}</td>
-              <td>{{ $functionary->email }}</td>
-              <td>{{ $functionary->phones }}</td>
+              <td>{{ $broker->name }}</td>
+              <td>{{ $broker->creci }}</td>
+              <td>{{ $broker->email }}</td>
+              <td>{{ $broker->phones }}</td>
               <td>
-                <a class="btn btn-default btn-xs" href={{ url("usuarios/funcionarios/$functionary->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
+                <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$broker->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
                   <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-info btn-xs" href={{ url("usuarios/funcionarios/$functionary->id/log") }} data-toggle="tooltip" data-placement="top" title="Visualizar Log">
+                <a class="btn btn-info btn-xs" href={{ url("usuarios/corretores/$broker->id/log") }} data-toggle="tooltip" data-placement="top" title="Visualizar Log">
                   <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
                 </a>
-                <form method="POST" action={{ url("/usuarios/funcionarios/$functionary->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
+                <form method="POST" action={{ url("/usuarios/corretores/$broker->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
                   {{ csrf_field() }}
                   {{ method_field('DELETE') }}
-                  <button type="submit" id="delete-task-{{ $functionary->id }}" class="btn btn-danger btn-xs">
+                  <button type="submit" id="delete-task-{{ $broker->id }}" class="btn btn-danger btn-xs">
                     <i class="fa fa-btn fa-trash"></i>
                   </button>
 

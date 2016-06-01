@@ -17,6 +17,10 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('home', 'HomeController@index');
 
-Route::resource('usuarios/funcionarios', 'FunctionariesController');
+    Route::resource('usuarios/funcionarios', 'FunctionariesController');
+    Route::resource('usuarios/corretores', 'BrokersController');
+    Route::resource('empreendimentos', 'EnterpriseController');
+});
