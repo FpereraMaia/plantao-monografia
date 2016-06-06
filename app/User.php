@@ -28,6 +28,22 @@ class User extends Authenticatable
 
     public function client()
     {
-      return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client');
+    }
+
+    public static function getBrokerRules($state = null)
+    {
+        $rules = [
+          'nome' => 'required|max:255',
+          'telefones' => 'required',
+          'creci' => 'required'
+        ];
+
+        if ($state != 'update') {
+            $rules['email'] = 'email|required|unique:users';
+            $rules['senhaDeAcesso'] = 'required|min:6';
+        }
+
+        return $rules;
     }
 }

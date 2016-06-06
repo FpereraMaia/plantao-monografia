@@ -27,7 +27,7 @@
                 <input type="text" id="nome" class="form-control" name="nome" required value="{{ $functionary->name }}"/>
 
                 <label for="email">Email * :</label>
-                <input type="email" id="email" class="form-control" name="e-mail" data-parsley-trigger="change" required value="{{ $functionary->email }}"/>
+                <input type="email" id="email" class="form-control" readonly disabled data-parsley-trigger="change" value="{{ $functionary->email }}"/>
 
                 <label for="telefones">Telefones :</label>
                 <input type="text" id="telefones" class="form-control" name="telefones" required value="{{ $functionary->phones }}"/>

@@ -99,13 +99,11 @@ class FunctionariesController extends Controller
   {
       $this->validate($request, [
         'nome' => 'required|max:255',
-        'e-mail' => 'email|required',
         'telefones' => 'required'
       ]);
 
       $funcionario = User::findOrFail($id);
       $funcionario->name = $request->nome;
-      $funcionario->email = $request->get('e-mail');
       $funcionario->phones = $request->telefones;
       if (!empty($request->senhaDeAcesso)) {
           $funcionario->password = bcrypt($request->senhaDeAcesso);

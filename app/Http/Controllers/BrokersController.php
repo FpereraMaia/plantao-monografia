@@ -44,13 +44,7 @@ class BrokersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-          'nome' => 'required|max:255',
-          'email' => 'email|required|unique:users',
-          'telefones' => 'required',
-          'creci' => 'required',
-          'senhaDeAcesso' => 'required|min:6',
-        ]);
+        $this->validate($request, User::getBrokerRules());
 
         $functionary = new User;
         $functionary->name = $request->nome;
@@ -83,9 +77,11 @@ class BrokersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $corretores)
     {
-        //
+      return view('brokersEdit', [
+        'broker' => $corretores
+      ]);
     }
 
     /**
@@ -97,7 +93,19 @@ class BrokersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, User::getBrokerRules('update'));
+
+        $broker = User::findOrFail($id);
+        $broker->name = $request->nome;
+        $broker->creci = $request->creci;
+        $broker->phones = $request->telefones;
+        if (!empty($request->senhaDeAcesso)) {
+            $broker->password = bcrypt($request->senhaDeAcesso);
+        }
+        $broker->save();
+
+        return redirect('/usuarios/corretores')->with('status', 'Corretor editado com sucesso!');
     }
 
     /**
