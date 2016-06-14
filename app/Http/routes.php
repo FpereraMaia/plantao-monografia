@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -23,4 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('usuarios/funcionarios', 'FunctionariesController');
     Route::resource('usuarios/corretores', 'BrokersController');
     Route::resource('empreendimentos', 'EnterpriseController');
+    Route::resource('quadras', 'BlocksController');
+    Route::resource('lotes', 'LotsController');
+    Route::resource('vendas', 'SalesController');
 });

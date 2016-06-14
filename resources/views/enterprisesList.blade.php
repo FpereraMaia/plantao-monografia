@@ -47,24 +47,46 @@
           </thead>
 
           <tbody>
-            @foreach($enterprises as $enterprise)
+            @foreach($enterprises as $key => $enterprise)
             <tr>
               <td>{{ $enterprise->name }}</td>
               <td>{{ $enterprise->cnpj }}</td>
               <td>
-                <a class="btn btn-default btn-xs" href={{ url("empreendimentos/$enterprise->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <a class="btn btn-default btn-xs" href={{ url("empreendimentos/$enterprise->id") }} data-toggle="tooltip" data-placement="top" title="Editar">
+                  <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                 </a>
-                <form method="POST" action={{ url("empreendimentos/$enterprise->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                  <button type="submit" id="delete-task-{{ $enterprise->id }}" class="btn btn-danger btn-xs">
-                    <i class="fa fa-btn fa-trash"></i>
-                  </button>
-
-                </form>
+                <!-- Button trigger modal -->
+                <button id="delete-task-{{ $enterprise->id }}" class="btn btn-danger btn-xs"  data-toggle="modal" data-target="#myModal{{ $key }}" data-backdrop='static'>
+                  <i class="fa fa-btn fa-trash"></i>
+                </button>
               </td>
             </tr>
+
+            <!-- Modal Excluir-->
+            <div class="modal fade" id="myModal{{ $key }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                    Todas as <strong>Quadras </strong> e <strong> Lotes</strong> relacionados ao empreendimento <strong>{{ $enterprise->name }}</strong> serão EXCLUÍDOS.
+                    <br/>
+                    Você tem certeza que quer excluir o empreendimento?
+                  </div>
+                  <form method="POST" action='{{ url("empreendimentos/$enterprise->id") }}' style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="submit" class="btn btn-danger">Excluir</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- FIM DO MODAL DE EXCLUIR  -->
             @endforeach
           </tbody>
         </table>

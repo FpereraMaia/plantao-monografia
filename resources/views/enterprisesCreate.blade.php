@@ -19,20 +19,14 @@
               </p>
               @include('common.errors')
               <!-- start form for validation -->
-              <form id="demo-form" action="{{ url('usuarios/funcionarios') }}" method="POST" data-parsley-validate>
+              <form id="demo-form" action="{{ url('empreendimentos') }}" method="POST" data-parsley-validate>
                 {{ csrf_field() }}
 
                 <label for="nome">Nome * :</label>
                 <input type="text" id="nome" class="form-control" name="nome" required value="{{ old('nome') }}"/>
 
-                <label for="email">Email * :</label>
-                <input type="email" id="email" class="form-control" name="email" data-parsley-trigger="change" required value="{{ old('email') }}"/>
-
-                <label for="telefones">Telefones :</label>
-                <input type="text" id="telefones" class="form-control" name="telefones" required value="{{ old('telefones') }}"/>
-
-                <label for="senha">Senha de Acesso * :</label>
-                <input type="password" id="senha" class="form-control" name="senhaDeAcesso" required />
+                <label for="email">CNPJ * :</label>
+                <input type="text" id="cnpj" class="form-control" name="cnpj" data-parsley-trigger="change" required value="{{ old('cnpj') }}"/>
 
                 <br>
                 <button type="submit" class="btn btn-primary">Salvar</button>

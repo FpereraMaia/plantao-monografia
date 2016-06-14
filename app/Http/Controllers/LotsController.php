@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Enterprise;
-use Auth;
 
-class EnterpriseController extends Controller
+use App\Http\Requests;
+use App\Lot;
+use App\Status;
+use App\Sale;
+
+class LotsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +18,7 @@ class EnterpriseController extends Controller
      */
     public function index()
     {
-        return view('enterprisesList', [
-          "enterprises" => Enterprise::where('client_id', Auth::user()->client_id)->get()
-        ]);
+        //
     }
 
     /**
@@ -28,7 +28,7 @@ class EnterpriseController extends Controller
      */
     public function create()
     {
-        return view('enterprisesCreate');
+        //
     }
 
     /**
@@ -39,19 +39,27 @@ class EnterpriseController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-          'nome' => 'required|max:255',
-          'cnpj' => 'required'
-        ]);
+      $this->validate($request, [
+        'nomeDoLote' => 'required|max:255',
+        'quadra' => 'required',
+      ]);
 
-        $enterprise = new Enterprise;
-        $enterprise->client_id = Auth::user()->client_id;
-        $enterprise->name = $request->get('nome');
-        $enterprise->cnpj = $request->get('cnpj');
-        $enterprise->save();
+      $lot = new Lot;
+      $lot->name = $request->get('nomeDoLote');
+      $lot->block_id = $request->get('quadra');
+      $lot->save();
 
-        return redirect('/empreendimentos')->with('status', 'Empreendimento criado com sucesso!');
+      //salva com status disponivel
+      $statusDisponivel = Status::where('codigo', Status::$codigo['disponivel'])->first();
 
+      $sale = new Sale;
+      $sale->lot_id = $lot->id;
+      $sale->status_id = $statusDisponivel->id;
+      $sale->save();
+
+      $empreendimento = $request->get('empreendimento');
+
+      return redirect("/empreendimentos/$empreendimento")->with('status', 'Lote cadastrado com sucesso!');
     }
 
     /**
@@ -62,9 +70,7 @@ class EnterpriseController extends Controller
      */
     public function show($id)
     {
-        return view('enterpriseShow', [
-          'enterprise' => Enterprise::findOrFail($id)
-        ]);
+        //
     }
 
     /**
@@ -98,9 +104,10 @@ class EnterpriseController extends Controller
      */
     public function destroy($id)
     {
-        $enterprise = Enterprise::findOrFail($id);
-        $enterprise->delete();
+        $lot = Lot::findOrFail($id);
+        $enterpriseId = $lot->block->enterprise_id;
+        $lot->delete();
 
-        return redirect('/empreendimentos')->with('status', 'Empreendimento excluído com sucesso!');
+        return redirect("/empreendimentos/$enterpriseId")->with('status', 'Lote excluído com sucesso!');
     }
 }
