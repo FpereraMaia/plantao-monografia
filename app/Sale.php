@@ -9,4 +9,9 @@ class Sale extends Model
     public function lot(){
       return $this->belongsTo('App\Lot');
     }
+
+    public function status()
+    {
+      return $this->belongsTo('App\Status');
+    }
 }

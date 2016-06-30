@@ -106,6 +106,8 @@ class LotsController extends Controller
     {
         $lot = Lot::findOrFail($id);
         $enterpriseId = $lot->block->enterprise_id;
+        
+        $lot->sale->delete();
         $lot->delete();
 
         return redirect("/empreendimentos/$enterpriseId")->with('status', 'Lote excluído com sucesso!');

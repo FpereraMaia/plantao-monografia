@@ -14,4 +14,9 @@ class Status extends Model
       'reservado' => 3,
       'vendido' => 4
     ];
+
+    public function sales()
+    {
+      return $this->hasMany('App\Sale');
+    }
 }

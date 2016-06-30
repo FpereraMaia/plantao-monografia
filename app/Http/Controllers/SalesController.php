@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Auth;
+use App\Enterprise;
 
 class SalesController extends Controller
 {
@@ -15,7 +17,9 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        return view('sales', [
+          'enterprises' => Enterprise::where('client_id', Auth::user()->client_id)->get()
+        ]);
     }
 
     /**
