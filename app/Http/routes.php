@@ -27,4 +27,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('quadras', 'BlocksController');
     Route::resource('lotes', 'LotsController');
     Route::resource('vendas', 'SalesController');
+    Route::resource('status', 'StatusController');
+    Route::post('corretor/venda', 'SalesController@storeBrokerSale');
 });

@@ -14,4 +14,9 @@ class Sale extends Model
     {
       return $this->belongsTo('App\Status');
     }
+
+    public function broker()
+    {
+      return $this->belongsTo('App\User');
+    }
 }

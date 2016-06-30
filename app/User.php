@@ -31,6 +31,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Client');
     }
 
+    public function sales()
+    {
+      return $this->hasMany('App\Sale');
+    }
+
     public static function getBrokerRules($state = null)
     {
         $rules = [
