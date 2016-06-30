@@ -19,4 +19,15 @@ class Sale extends Model
     {
       return $this->belongsTo('App\User');
     }
+
+    public function getPriceAttribute($value)
+    {
+      //se ñ tiver o preço setado na tabela de vendas, pega o valor do lote
+      if($value == "0.00"){
+        return $this->lot->price;
+      }
+      else{
+        return $value;
+      }
+    }
 }

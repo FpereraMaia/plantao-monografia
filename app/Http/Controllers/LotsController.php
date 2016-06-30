@@ -47,6 +47,9 @@ class LotsController extends Controller
       $lot = new Lot;
       $lot->name = $request->get('nomeDoLote');
       $lot->block_id = $request->get('quadra');
+      $valor = str_replace(".", "", $request->get('valor'));
+      $valor = str_replace(",", ".", $valor);
+      $lot->price = $valor;
       $lot->save();
 
       //salva com status disponivel
@@ -106,7 +109,7 @@ class LotsController extends Controller
     {
         $lot = Lot::findOrFail($id);
         $enterpriseId = $lot->block->enterprise_id;
-        
+
         $lot->sale->delete();
         $lot->delete();
 

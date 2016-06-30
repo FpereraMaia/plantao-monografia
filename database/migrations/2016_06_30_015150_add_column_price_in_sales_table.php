@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CretateRelationLotEnterprises extends Migration
+class AddColumnPriceInSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,8 @@ class CretateRelationLotEnterprises extends Migration
      */
     public function up()
     {
-        Schema::table('lots', function(Blueprint $table){
-          $table->integer('enterprise_id')->unsigned();
-          $table->foreign('enterprise_id')->references('id')->on('enterprises');
+        Schema::table('sales', function(Blueprint $table){
+          $table->decimal('price', 10, 2)->default(0.00);
         });
     }
 
@@ -25,6 +24,8 @@ class CretateRelationLotEnterprises extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('sales', function(Blueprint $table){
+        $table->dropColumn('price');
+      });
     }
 }

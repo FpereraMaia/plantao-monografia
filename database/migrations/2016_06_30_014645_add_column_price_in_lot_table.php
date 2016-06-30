@@ -12,7 +12,9 @@ class AddColumnPriceInLotTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('lots', function(Blueprint $table){
+          $table->decimal('price', 10, 2)->default(0.00);
+        });
     }
 
     /**
@@ -22,6 +24,8 @@ class AddColumnPriceInLotTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::table('lots', function(Blueprint $table){
+        $table->dropColumn('price');
+      });
     }
 }

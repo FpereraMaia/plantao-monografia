@@ -66,15 +66,21 @@
             <form class="form-inline" action="{{ url('lotes') }}" method="POST" data-parsley-validate>
               {{ csrf_field() }}
               <input type="hidden" value="{{ $enterprise->id }}" name='empreendimento' />
-              <label for="nome">Quadra:</label>
-              <select name="quadra" class="form-control">
-                @foreach($enterprise->blocks as $block)
-                <option value="{{ $block->id }}">{{ $block->name }}</option>
-                @endforeach
-              </select>
-              <label for="nomeDoLote">Nome * :</label>
-              <input type="text" id="nome" class="form-control" name="nomeDoLote" required value="{{ old('nomeDoLote') }}"/>
-              <button type="submit" class="btn btn-primary">Salvar</button>
+              <div class="row">
+                <label for="nome">Quadra:</label>
+                <select name="quadra" class="form-control">
+                  @foreach($enterprise->blocks as $block)
+                  <option value="{{ $block->id }}">{{ $block->name }}</option>
+                  @endforeach
+                </select>
+                <label for="nomeDoLote">Nome * :</label>
+                <input type="text" id="nome" class="form-control" name="nomeDoLote" required value="{{ old('nomeDoLote') }}"/>
+              </div>
+              <div class="row">
+                <label for="valor">Valor :</label>
+                <input type="text" id="valor" class="form-control money" name="valor" value="{{ old('valor') }}"/>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+              </div>
             </form>
             <hr />
             <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
@@ -82,6 +88,7 @@
                 <tr>
                   <th>Nome</th>
                   <th>Quadra</th>
+                  <th>Valor</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -92,10 +99,11 @@
                 <tr>
                   <td>{{ $lot->name }}</td>
                   <td>{{ $lot->block->name }}</td>
+                  <td>{{ "R$ " . number_format($lot->price, 2, ',', '.') }}</td>
                   <td>
-                    <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$lot->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
+                    <!-- <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$lot->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
                       <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    </a>
+                    </a> -->
                     <form method="POST" action={{ url("/lotes/$lot->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}

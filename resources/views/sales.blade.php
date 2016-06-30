@@ -64,7 +64,7 @@
                     @endforeach
                   </select>
                 </td>
-                <td> {{ $lot->sale->valor }} </td>
+                <td> {{ "R$ " . number_format($lot->sale->price, 2, ',', '.') }} </td>
                 <td>{{ $lot->sale->percentage }} </td>
                 <td> Vender </td>
               </tr>
