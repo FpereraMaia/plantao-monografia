@@ -1,14 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use Auth;
-use App\Enterprise;
-use App\Status;
-use Kodeine\Acl\Models\Eloquent\Role as Role;
-use App\Sale;
+use App\Http\Requests, Auth;
+use App\Enterprise, App\Status, Kodeine\Acl\Models\Eloquent\Role as Role, App\Sale;
 
 class SalesController extends Controller
 {
@@ -104,5 +99,36 @@ class SalesController extends Controller
       $sale->save();
 
       return response()->json($sale);
+    }
+
+    public function savePrice(Request $request)
+    {
+      $this->validate($request, [
+        'id' => 'required',
+        'data' => 'required'
+      ]);
+
+      $sale = Sale::findOrFail($request->get('id'));
+      $price = str_replace('.', '', $request->get('data'));
+      $sale->price = str_replace(',', '.', $price);
+
+      $sale->save();
+
+      return response()->json($sale->price);
+    }
+
+    public function savePercentage(Request $request) {
+      $this->validate($request, [
+        'id' => 'required',
+        'data' => 'required'
+      ]);
+
+      $sale = Sale::findOrFail($request->get('id'));
+      $percentage = str_replace('.', '', $request->get('data'));
+      $sale->percentage = str_replace(',', '.', $percentage);
+
+      $sale->save();
+
+      return response()->json($sale->percentage);
     }
 }

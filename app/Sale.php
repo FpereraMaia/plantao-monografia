@@ -30,4 +30,13 @@ class Sale extends Model
         return $value;
       }
     }
+
+    public function getPercentageAttribute($value){
+      if(empty($value)){
+        return '0.00';
+      }
+      else{
+        return $value;
+      }
+    }
 }

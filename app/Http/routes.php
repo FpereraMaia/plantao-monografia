@@ -29,4 +29,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('vendas', 'SalesController');
     Route::resource('status', 'StatusController');
     Route::post('corretor/venda', 'SalesController@storeBrokerSale');
+    Route::post('venda/salvar-preco', 'SalesController@savePrice');
+    Route::post('venda/salvar-porcentagem', 'SalesController@savePercentage');
 });

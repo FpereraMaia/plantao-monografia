@@ -15,7 +15,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Empreendimentos LISTAR QUADRA E LOTES<small></small></h2>
+          <h2>Empreendimentos<small></small></h2>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
@@ -54,6 +54,7 @@
               <td>
                 <a class="btn btn-default btn-xs" href={{ url("empreendimentos/$enterprise->id") }} data-toggle="tooltip" data-placement="top" title="Editar">
                   <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                  Quadras/Lotes
                 </a>
                 <!-- Button trigger modal -->
                 <button id="delete-task-{{ $enterprise->id }}" class="btn btn-danger btn-xs"  data-toggle="modal" data-target="#myModal{{ $key }}" data-backdrop='static'>

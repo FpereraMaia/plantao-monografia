@@ -13,7 +13,8 @@
         <div class="x_title">
           <h2>Gerenciar Vendas <small></small></h2>
           <ul class="nav navbar-right panel_toolbox">
-            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            <li>
+              <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
           </ul>
           <div class="clearfix"></div>
@@ -25,10 +26,9 @@
                 <th>Empreendimento</th>
                 <th>Quadra</th>
                 <th>Lote</th>
-                <th>Status</th>
                 <th>Corretor</th>
-                <th>Valor</th>
-                <th>Porcentagem do Corretor</th>
+                <th>Valor (R$)</th>
+                <th>Porcentagem do Corretor (%)</th>
                 <th>Ações </th>
               </tr>
             </thead>
@@ -42,17 +42,6 @@
                 <td>{{ $block->name }}</td>
                 <td>{{ $lot->name }}</td>
                 <td>
-                  <select class="selectpicker show-tick" data-value="{{ $lot->sale->id }}" data-tipo="status" data-style="btn-xs btn-default" data-width="fit" data-live-search="true">
-                    @foreach($status as $key => $itemStatus)
-                    @if($lot->sale->status->id == $key)
-                    <option value="{{ $key }}" selected="selected"> {{$itemStatus}} </option>
-                    @else
-                    <option value="{{ $key }}"> {{$itemStatus}} </option>
-                    @endif
-                    @endforeach
-                  </select>
-                </td>
-                <td>
                   <select class="selectpicker show-tick" data-value="{{ $lot->sale->id }}" data-tipo="corretor" data-style="btn-xs btn-default" data-width="fit" data-live-search="true">
                     <option value="" data-sale="{{ $lot->sale->id }}"> Selecione o Corretor </option>
                     @foreach($brokers as $key => $broker)
@@ -64,9 +53,35 @@
                     @endforeach
                   </select>
                 </td>
-                <td> {{ "R$ " . number_format($lot->sale->price, 2, ',', '.') }} </td>
-                <td>{{ $lot->sale->percentage }} </td>
-                <td> Vender </td>
+                <td>
+                  <a href="javascript:;" class="link-value" style="border-bottom: 2px dotted">
+                    {{ number_format($lot->sale->price, 2, ',', '.') }}
+                  </a>
+                  <span>
+                    <input type="text" class="form-control money" value="{{ number_format($lot->sale->price, 2, ',', '.') }}"/>
+                    <button class="btn btn-xs save-price" data-venda="{{ $lot->sale->id }}" data-tipo="preco"> Salvar </button>
+                  </span>
+                </td>
+                <td>
+                  <a href="javascript:;" class="link-value" style="border-bottom: 2px dotted">
+                    {{ $lot->sale->percentage }}
+                  </a>
+                  <span>
+                    <input type="text" class="form-control money" value="{{ $lot->sale->percentage }}"/>
+                    <button class="btn btn-xs save-price" data-venda="{{ $lot->sale->id }}" data-tipo="corretor"> Salvar </button>
+                  </span>
+                </td>
+                <td>
+                  <select class="selectpicker show-tick" data-value="{{ $lot->sale->id }}" data-tipo="status" data-style="btn-xs btn-default" data-width="fit" data-live-search="true">
+                    @foreach($status as $key => $itemStatus)
+                    @if($lot->sale->status->id == $key)
+                    <option value="{{ $key }}" selected="selected"> {{$itemStatus}} </option>
+                    @else
+                    <option value="{{ $key }}"> {{$itemStatus}} </option>
+                    @endif
+                    @endforeach
+                  </select>
+                </td>
               </tr>
               @endforeach
               @endforeach
@@ -86,5 +101,6 @@
 <script src="{{ asset('js/bootstrap-select-1.10.0/dist/js/i18n/defaults-pt_BR.min.js') }}"></script>
 <script src="{{ asset('js/services/statusServices.js') }}"> </script>
 <script src="{{ asset('js/services/corretorServices.js') }}"> </script>
+<script src="{{ asset('js/services/saleServices.js') }}"> </script>
 <script src="{{ asset('js/sale.js') }}"> </script>
 @endsection

@@ -105,7 +105,7 @@
 <!-- top navigation -->
 <div class="top_nav">
 
-  <div class="nav_menu">
+  <div class="nav_menu hidden-print">
     <nav class="" role="navigation">
       @if (!Auth::guest())
       <div class="nav toggle">
