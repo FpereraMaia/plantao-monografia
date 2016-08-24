@@ -39,8 +39,8 @@
               <th>CRECI</th>
               <th>E-mail</th>
               <th>Qtde de Lotes Vendidos</th>
-              <th>Valor Total dos Lotes Vendidos</th>
-              <th>Valor Total % Corretor </th>
+              <th>Valor Total dos Lotes Vendidos (R$)</th>
+              <th>Valor Total % Corretor (R$)</th>
             </tr>
           </thead>
 
