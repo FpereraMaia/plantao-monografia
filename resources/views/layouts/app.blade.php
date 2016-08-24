@@ -74,7 +74,7 @@
               <ul class="nav side-menu">
                 <li><a><i class="fa fa-money"></i> Financeiro </a></li>
                 <li><a><i class="fa fa-braille"></i> Lotes </a></li>
-                <li><a><i class="fa fa-user-secret"></i> Corretores </a></li>
+                <li><a href="{{ url('relatorios/corretores') }}"><i class="fa fa-user-secret"></i> Corretores </a></li>
               </ul>
             </div>
 

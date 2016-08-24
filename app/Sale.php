@@ -39,4 +39,8 @@ class Sale extends Model
         return $value;
       }
     }
+
+    public function setValueOfPercentage(){
+      $this->percentage_of_the_value = ( $this->percentage / 100 ) * $this->price;
+    }
 }

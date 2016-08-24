@@ -31,4 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('corretor/venda', 'SalesController@storeBrokerSale');
     Route::post('venda/salvar-preco', 'SalesController@savePrice');
     Route::post('venda/salvar-porcentagem', 'SalesController@savePercentage');
+    Route::group(['prefix' => 'relatorios'], function(){
+      Route::get('corretores', 'BrokersController@showReportsList');
+    });
 });

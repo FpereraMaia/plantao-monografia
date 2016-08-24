@@ -14,7 +14,7 @@ class CreateSaleTable extends Migration
     {
         Schema::create('sales', function(Blueprint $table){
           $table->increments('id');
-          $table->decimal('percentage', 15, 2)->nullable();
+          $table->decimal('percentage', 15, 2)->default(0.00);
           $table->integer('lot_id')->unsigned();
           $table->foreign('lot_id')->references('id')->on('lots');
           $table->integer('broker_id')->nullable()->unsigned();

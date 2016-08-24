@@ -17,7 +17,9 @@ class SalesController extends Controller
         return view('sales', [
           'enterprises' => Enterprise::where('client_id', Auth::user()->client_id)->get(),
           'status' => Status::all()->lists('name', 'id'),
-          'brokers' => Role::where('slug', 'corretor')->first()->users
+          'brokers' => Role::with(['users' => function ($query) {
+              $query->where('client_id', Auth::user()->client_id);
+          }])->where('slug', 'corretor')->first()->users
         ]);
     }
 
@@ -111,7 +113,7 @@ class SalesController extends Controller
       $sale = Sale::findOrFail($request->get('id'));
       $price = str_replace('.', '', $request->get('data'));
       $sale->price = str_replace(',', '.', $price);
-
+      $sale->setValueOfPercentage();
       $sale->save();
 
       return response()->json($sale->price);
@@ -126,7 +128,7 @@ class SalesController extends Controller
       $sale = Sale::findOrFail($request->get('id'));
       $percentage = str_replace('.', '', $request->get('data'));
       $sale->percentage = str_replace(',', '.', $percentage);
-
+      $sale->setValueOfPercentage();
       $sale->save();
 
       return response()->json($sale->percentage);

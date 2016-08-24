@@ -57,6 +57,7 @@ class LotsController extends Controller
 
       $sale = new Sale;
       $sale->lot_id = $lot->id;
+      $sale->price = $valor;
       $sale->status_id = $statusDisponivel->id;
       $sale->save();
 

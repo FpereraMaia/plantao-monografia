@@ -33,7 +33,7 @@ class User extends Authenticatable
 
     public function sales()
     {
-      return $this->hasMany('App\Sale');
+      return $this->hasMany('App\Sale', 'broker_id');
     }
 
     public static function getBrokerRules($state = null)

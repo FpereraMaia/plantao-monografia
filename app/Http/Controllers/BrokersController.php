@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Kodeine\Acl\Models\Eloquent\Role as Role;
 use Auth;
-use App\User;
+use App\User, App\Status;
 
 class BrokersController extends Controller
 {
@@ -79,7 +79,7 @@ class BrokersController extends Controller
      */
     public function edit(User $corretores)
     {
-      return view('brokersEdit', [
+        return view('brokersEdit', [
         'broker' => $corretores
       ]);
     }
@@ -93,7 +93,6 @@ class BrokersController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $this->validate($request, User::getBrokerRules('update'));
 
         $broker = User::findOrFail($id);
@@ -121,5 +120,35 @@ class BrokersController extends Controller
         $corretores->revokeAllRoles();
         $corretores->delete();
         return redirect('/usuarios/corretores')->with('status', 'Corretor excluído com sucesso!');
+    }
+
+    public function showReportsList()
+    {
+        $role = Role::with(['users' => function ($query) {
+            $query->where('client_id', Auth::user()->client_id);
+        }])->where('slug', 'corretor')->first();
+
+        // total de lotes vendidos, valor total dos lotes vendidos, valor total do dinheiro
+        // ganho por corretor, nome do corretor, e-mail, creci
+        $arrayRelatorio = [];
+        $statusLoteVendido = Status::where('codigo', Status::$codigo['vendido'])->first();
+        foreach ($role->users as $key => $corretor) {
+          $totalValorVendas = $corretor->sales()->sum('price');
+          $totalDeVendas = $corretor->sales()->count();
+          $valorTotalRetiradaCorretor = $corretor->sales()->where('status_id', $statusLoteVendido->id)->sum('percentage_of_the_value');
+
+          array_push($arrayRelatorio, [
+            "nome" => $corretor->name,
+            "creci" => $corretor->creci,
+            "email" => $corretor->email,
+            "totalDeVendas" => $totalDeVendas,
+            "totalValorVendas" => $totalValorVendas,
+            "valorTotalRetiradaCorretor" => $valorTotalRetiradaCorretor
+          ]);
+        }
+
+        return view('reports.brokersReportList',[
+          'arrayRelatorio' => $arrayRelatorio
+        ]);
     }
 }

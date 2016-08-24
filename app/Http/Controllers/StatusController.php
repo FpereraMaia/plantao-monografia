@@ -44,6 +44,7 @@ class StatusController extends Controller
 
         $sale = Sale::findOrFail($request->get('sale'));
         $sale->status_id = $request->get('item');
+        $sale->setValueOfPercentage();
         $sale->save();
 
         return response()->json($sale);
