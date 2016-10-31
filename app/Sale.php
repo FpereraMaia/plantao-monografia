@@ -43,4 +43,9 @@ class Sale extends Model
     public function setValueOfPercentage(){
       $this->percentage_of_the_value = ( $this->percentage / 100 ) * $this->price;
     }
+
+    public function getNetValue()
+    {
+      return ($this->price - $this->percentage_of_the_value);
+    }
 }

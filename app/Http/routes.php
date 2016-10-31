@@ -33,5 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('venda/salvar-porcentagem', 'SalesController@savePercentage');
     Route::group(['prefix' => 'relatorios'], function(){
       Route::get('corretores', 'BrokersController@showReportsList');
+      Route::get('financeiro', 'ReportsController@financial');
+      Route::get('lotes', 'ReportsController@lots');
     });
 });

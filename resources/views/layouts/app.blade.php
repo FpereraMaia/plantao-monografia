@@ -72,8 +72,8 @@
             <div class="menu_section">
               <h3>Relatórios</h3>
               <ul class="nav side-menu">
-                <li><a><i class="fa fa-money"></i> Financeiro </a></li>
-                <li><a><i class="fa fa-braille"></i> Lotes </a></li>
+                <li><a href="{{ url('relatorios/financeiro') }}"><i class="fa fa-money"></i> Financeiro </a></li>
+                <li><a href="{{ url('relatorios/lotes') }}"><i class="fa fa-braille"></i> Lotes </a></li>
                 <li><a href="{{ url('relatorios/corretores') }}"><i class="fa fa-user-secret"></i> Corretores </a></li>
               </ul>
             </div>
