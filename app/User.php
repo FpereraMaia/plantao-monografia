@@ -36,6 +36,19 @@ class User extends Authenticatable
       return $this->hasMany('App\Sale', 'broker_id');
     }
 
+    public function scopeSalesSoldAndInNegotiation($query)
+    {
+      $idStatusSold = Status::where('codigo', Status::$codigo['vendido'])->first()->id;
+      $idStatusNegotiation = Status::where('codigo', Status::$codigo['emNegociacao'])->first()->id;
+      return $this->sales()->whereIn('status_id', [$idStatusSold, $idStatusNegotiation]);
+    }
+
+    public function scopeSalesSold($query)
+    {
+      $idStatusSold = Status::where('codigo', Status::$codigo['vendido'])->first()->id;
+      return $this->sales()->where('status_id', $idStatusSold);
+    }
+
     public static function getBrokerRules($state = null)
     {
         $rules = [

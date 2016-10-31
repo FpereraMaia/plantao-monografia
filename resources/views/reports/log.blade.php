@@ -15,67 +15,45 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Usuários <small>Corretores</small></h2>
+          <h2>Log de Usuários</h2>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
-            <li class="dropdown">
+            <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url('/usuarios/corretores/create') }}">Novo Corretor</a>
-                </li>
-                <li><a href="{{ url('/usuarios/corretores/log-geral') }}">Log Geral</a>
+                <li><a href="{{ url('/usuarios/corretores/create') }}">Imprimir</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- <li><a class="close-link"><i class="fa fa-close"></i></a>
           </li> -->
         </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <p class="text-muted font-13 m-b-30">
-          A tabela abaixo representa a lista dos corretores cadastrados no sistema. Para obter a auditoria do que eles efetuaram no sistema, clique no botão na coluna <code> Ações </code>.
-        </p>
-        @include('common.success')
-        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <table class="datatable-responsive table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>CRECI</th>
-              <th>E-mail</th>
-              <th>Telefones</th>
-              <th>Ações</th>
+              <th>Usuário</th>
+              <th>Texto</th>
+              <th>IP</th>
+              <th>Criado em</th>
             </tr>
           </thead>
-
           <tbody>
-            @foreach($roleBrokers->users as $broker)
-            <tr>
-              <td>{{ $broker->name }}</td>
-              <td>{{ $broker->creci }}</td>
-              <td>{{ $broker->email }}</td>
-              <td>{{ $broker->phones }}</td>
-              <td>
-                <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$broker->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                </a>
-                <a class="btn btn-info btn-xs" href={{ url("relatorios/corretores/$broker->id") }} data-toggle="tooltip" data-placement="top" title="Relatório de Corretor">
-                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                </a>
-                <form method="POST" action={{ url("/usuarios/corretores/$broker->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                  <button type="submit" id="delete-task-{{ $broker->id }}" class="btn btn-danger btn-xs">
-                    <i class="fa fa-btn fa-trash"></i>
-                  </button>
 
-                </form>
-              </td>
+            @foreach($logs as $log)
+            <tr>
+              <td> {{ $log->user->name }} </td>
+              <td> {{ $log->text }} </td>
+              <td> {{ $log->ip_address }} </td>
+              <td> {{ $log->created_at->format('d/m/Y H:i:s') }} </td>
             </tr>
             @endforeach
           </tbody>
         </table>
+
       </div>
     </div>
   </div>
@@ -100,7 +78,9 @@
 <script src="{{ asset('vendors/pdfmake/build/vfs_fonts.js') }}"></script>
 <script>
 $(document).ready(function(){
-  $('#datatable-responsive').DataTable();
+  $('.datatable-responsive').DataTable({
+    "order": [[ 1, "desc" ]]
+  });
 });
 </script>
 @endsection

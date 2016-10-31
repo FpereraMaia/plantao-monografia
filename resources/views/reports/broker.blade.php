@@ -15,65 +15,56 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="x_panel">
         <div class="x_title">
-          <h2>Usuários <small>Corretores</small></h2>
+          <h2>Relatório <small>Corretor: <strong> {{ $broker->name }} </strong></small></h2>
           <ul class="nav navbar-right panel_toolbox">
             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
             </li>
-            <li class="dropdown">
+            <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url('/usuarios/corretores/create') }}">Novo Corretor</a>
-                </li>
-                <li><a href="{{ url('/usuarios/corretores/log-geral') }}">Log Geral</a>
+                <li><a href="{{ url('/usuarios/corretores/create') }}">Imprimir</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
             <!-- <li><a class="close-link"><i class="fa fa-close"></i></a>
           </li> -->
         </ul>
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <p class="text-muted font-13 m-b-30">
-          A tabela abaixo representa a lista dos corretores cadastrados no sistema. Para obter a auditoria do que eles efetuaram no sistema, clique no botão na coluna <code> Ações </code>.
-        </p>
-        @include('common.success')
-        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <table class="datatable-responsive table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>CRECI</th>
-              <th>E-mail</th>
-              <th>Telefones</th>
-              <th>Ações</th>
+              <th>Lote</th>
+              <th>Quadra</th>
+              <th>Status</th>
+              <td>Valor Bruto (R$)</td>
+              <th>Porcentagem do Corretor (%)</th>
+              <th>Prêmio Corretor (R$)</th>
             </tr>
           </thead>
-
           <tbody>
-            @foreach($roleBrokers->users as $broker)
-            <tr>
-              <td>{{ $broker->name }}</td>
-              <td>{{ $broker->creci }}</td>
-              <td>{{ $broker->email }}</td>
-              <td>{{ $broker->phones }}</td>
-              <td>
-                <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$broker->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
-                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                </a>
-                <a class="btn btn-info btn-xs" href={{ url("relatorios/corretores/$broker->id") }} data-toggle="tooltip" data-placement="top" title="Relatório de Corretor">
-                  <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-                </a>
-                <form method="POST" action={{ url("/usuarios/corretores/$broker->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
-                  {{ csrf_field() }}
-                  {{ method_field('DELETE') }}
-                  <button type="submit" id="delete-task-{{ $broker->id }}" class="btn btn-danger btn-xs">
-                    <i class="fa fa-btn fa-trash"></i>
-                  </button>
+            <?php $valorLiquidoTotal = 0 ?>
+            @foreach($broker->salesSoldAndInNegotiation()->get() as $sale)
 
-                </form>
-              </td>
+            <tr>
+              <td> {{ $sale->lot->name}} </td>
+              <td> {{ $sale->lot->block->name }} </td>
+              <td> {{ $sale->status->name }} </td>
+              <td> {{ number_format($sale->price, 2, ',', '.') }} </td>
+              <td> {{ $sale->percentage }} </td>
+              <td> {{ number_format($sale->percentage_of_the_value, 2, ',', '.') }} </td>
             </tr>
+            <?php $valorLiquidoTotal += $sale->percentage_of_the_value ?>
             @endforeach
+            <tr>
+              <td> <strong>TOTAL DOS PRÊMIOS</strong> </td>
+              <td> </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><strong> {{ number_format($valorLiquidoTotal, 2, ',', '.') }} </strong></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -100,7 +91,7 @@
 <script src="{{ asset('vendors/pdfmake/build/vfs_fonts.js') }}"></script>
 <script>
 $(document).ready(function(){
-  $('#datatable-responsive').DataTable();
+  $('.datatable-responsive').DataTable();
 });
 </script>
 @endsection

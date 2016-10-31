@@ -12,15 +12,14 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('login');
-});
-
 Route::auth();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('home', 'HomeController@index');
 
+  Route::group(['middleware' => ['personalPermission']], function () {
+    Route::get('/', 'SalesController@index');
+    Route::get('home', 'SalesController@index');
+    Route::get('log', 'ReportsController@log');
     Route::resource('usuarios/funcionarios', 'FunctionariesController');
     Route::resource('usuarios/corretores', 'BrokersController');
     Route::resource('empreendimentos', 'EnterpriseController');
@@ -35,5 +34,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('corretores', 'BrokersController@showReportsList');
       Route::get('financeiro', 'ReportsController@financial');
       Route::get('lotes', 'ReportsController@lots');
+      Route::get('ranking/corretores', 'ReportsController@brokerRank');
     });
+  });
+  Route::get('relatorios/corretores/{id}', 'ReportsController@showBrokerReport');
 });

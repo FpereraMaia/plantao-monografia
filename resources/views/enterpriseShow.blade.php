@@ -43,9 +43,9 @@
                 <tr>
                   <td>{{ $block->name }}</td>
                   <td>
-                    <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$block->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
+                    <!-- <a class="btn btn-default btn-xs" href={{ url("usuarios/corretores/$block->id/edit") }} data-toggle="tooltip" data-placement="top" title="Editar">
                       <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    </a>
+                    </a> -->
                     <form method="POST" action={{ url("/quadras/$block->id") }} style="display:initial" data-toggle="tooltip" data-placement="top" title="Excluir">
                       {{ csrf_field() }}
                       {{ method_field('DELETE') }}

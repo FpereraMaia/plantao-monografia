@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    
+
     public function users(){
       return $this->hasMany('App\User');
     }
